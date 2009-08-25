@@ -1,0 +1,14 @@
+h1 { background: black; color: white;}
+h1:hover {font-style: italic;}
+#hello > p {background: green;}
+b + div { color: red;}
+ul 
+h1:first-child { color:pink;}
+.a.b { border: 1px solid red;}
+
+li:first-child:hover { color: red;}
+
+ul[rel=hello] {background: yellow;}
+ul[rel=hello] li:focus {background: pink;}
+
+input:focus {background: pink;}

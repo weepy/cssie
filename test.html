@@ -1,0 +1,46 @@
+<html>
+<head>
+
+<link href="style.css"rel="stylesheet" type="text/css" />
+<script src='jquery.js'></script>
+<script src='cssie.js'></script>
+<script>
+$().ready(function() {
+   $.cssie(true)
+})
+</script>
+
+</head>
+<body>
+<h1>Cssie Tests</h1>
+
+<h1>Hover Test</h1>
+
+<div id=hello>
+  <p>GREEN BACKGROUND due to ></p>
+  
+  <div>
+    <p>NO GREEN BACKGROUND</p>  
+    
+  </div>
+  <b class='a b'>red border due to multiple classes</b>
+  <div>
+    I AM RED due to + 
+  </div> 
+ 
+</div>
+
+<ul >
+  <li>hover effect due to :first-child</li><li>no hover effect</li>
+</ul>
+
+
+<ul rel=hello>
+  <li>YELLOW BACKGROUND due to [rel=hello]</li>
+</ul>
+
+<input value='focus effect due to :focus' />
+
+</body>
+</html>
+
