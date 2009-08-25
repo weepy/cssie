@@ -15,10 +15,10 @@ Plugin for jQuery providing native support for missing CSS in IE. Currently prov
 How it works
 ------------
 
-* that parses the stylesheets for rules that match a refex
-* replaces CSS rules that match :hover with corresponding rules with .cssie-x
-* apply these same rules using the jQuery engine instead
-* for :hover and :focus, it then automatically setups up jQuery events that add and remove the .cssie-x class
+* that parses the stylesheets for rules that match a regex
+* replaces selectors that match with corresponding rules with an internal class .cssie-x (x is an integer)
+* add the class cssie-x using the original selector using jQuery
+* for :hover and :focus, automatically setup up jQuery events to add/remove the .cssie-x class upon hover/focus
 
 Usage
 -----
@@ -27,7 +27,7 @@ Usage
 * $.cssie() on the jQuery.ready event
 * You can cause the same behaviour on non MSIE browsers with: $.cssie(true) 
 
-Tested with IE6 and IE7
+Tested with Firefox
 
 Author: Jonah Fox
 Website: parkerfox.co.uk

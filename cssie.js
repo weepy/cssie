@@ -52,7 +52,7 @@
   
   var selector_id = 1
   function generate_class() {
-    return "ie-css" + selector_id++
+    return "cssie-" + selector_id++
   }
   
   function applyjQuery(selector, klass) {
