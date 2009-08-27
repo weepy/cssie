@@ -1,8 +1,6 @@
-h1 { background: black; color: white;}
-h1:hover {font-style: italic;}
 #hello > p {background: green;}
 b + div { color: red;}
-ul 
+h1:hover {font-style: italic;} 
 h1:first-child { color:pink;}
 .a.b { border: 1px solid red;}
 

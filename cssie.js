@@ -3,46 +3,55 @@
   var regex = />|\+|\w\.|:|~|\[/
     
   function fixCSS() {
+	$("link").each(function() {
+		$.get($(this).attr("href"), function(text) {
+			var rules = parseCSS(text);
+			fixCSSRules(rules)
+		})
+	})
+  }
 
-    var hoverRules = []
-    for(var i=0; i < document.styleSheets.length; i++) {
-      var sheet = document.styleSheets[i]
-      var rules = $.browser.msie ? sheet.rules : sheet.cssRules
-      for(var j=0; j< rules.length; j++) {
-        var rule = rules[j];
-        var selector = rule.selectorText
-        if(selector.match(regex)) {
-          var klass = generate_class()
-          
-          applyjQuery( selector, klass )
-          
-          addRule(sheet, rule, j, klass)
-          removeRule(sheet, j+1)
-        }
-      }
-    }
+  function parseCSS(text) {
+	var lines = text.replace(/\n/g, " ").split("}");
+	var ret = []
+	for(var i in lines) {
+		var match = lines[i].match(/^(.*){(.*)/)
+
+		if(match){
+			ret.push({selector:match[1],style:match[2]})
+		}
+	}
+
+	return ret
   }
-  
-  
-  function findHandler(selector) {
-    for(var i in handlers) {
-      var handler = handlers[i]
-      if(selector.match(handler))
-        return true
-    }
-    return false
-  }
+
+  function fixCSSRules(rules) {
+	$("head").append( $("<style>"))
+
+	var sheet = document.styleSheets[document.styleSheets.length-1]
+	var sheet_rules = $.browser.msie ? sheet.rules : sheet.cssRules
+    var added = -1
+	for(var i=0; i < rules.length; i++) {
+		var rule = rules[i];
+		if(rule.selector.match(regex)) {
+		  var klass = generate_class()
+		  applyjQuery( rule.selector, klass )
+		  addRule(sheet, rule, added + sheet_rules.length, klass)
+		  added ++
+		 }	
+	}
+  }  
  
   function debug(x) {
 	  $("body").append(x).append("<br/>")
   }
 
   function addRule(sheet, rule, i, klass) {
-    if($.browser.msie)
-      sheet.addRule("." + selector, rule.style.cssText, i)
-    else {
-      var ruleText = rule.cssText.replace(rule.selectorText, "")
-      sheet.insertRule("." + klass + ruleText, i)
+    if($.browser.msie) {
+      sheet.addRule("." + klass, rule.style)
+    }
+	else {
+      sheet.insertRule("." + klass + " { " + rule.style + " }", 0)
     }
   }
  
@@ -69,20 +78,21 @@
     }
     
     var $$ = $(selector)
-    
-    if(!hover && !focus)
-      $$.addClass(klass)
-    
+
+    var add = (function(selector, klass) { return function() { 
+		$(selector).addClass(klass) } 
+	})(selector, klass)
+
+    if(!hover && !focus) {
+	  $().ready(add)//.html("<i>klass is "+ klass+ "</i>")
+    }
     if(hover) {
-      var on = (function(x) { return function() { $(this).addClass(x) } })(klass)
-      var off = (function(x) { return function() { $(this).removeClass(x) } })(klass)
-      $$.hover(on, off)
+	  var del = (function(x) { return function() { $(this).removeClass(x) } })(klass)
+      $$.hover(add, del)
     }
     
     if(focus) {
-      var on = (function(x) { return function() { $(this).addClass(x) } })(klass)
-      var off = (function(x) { return function() { $(this).removeClass(x) } })(klass)
-       $$.focus(on).blur(off)
+       $$.focus(add).blur(del)
     }
   } 
  

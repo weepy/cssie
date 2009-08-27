@@ -1,17 +1,28 @@
 <html>
 <head>
-
-<link href="style.css"rel="stylesheet" type="text/css" />
+<style>
+h1 { 
+  background: black; color: white;
+}
+</style>
+<link href="style.css" rel="stylesheet" type="text/css" />
 <script src='jquery.js'></script>
 <script src='cssie.js'></script>
-<script>
-$().ready(function() {
-   $.cssie(true)
-})
-</script>
 
+<!-- <script type='text/javascript' src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script> -->
+
+<script>
+var test = true
+if(test) {
+  $.cssie(true)
+  $("link").remove() //we should be able to remove this and not effect anything in firefox - NB this is only for testing in firefox
+} else {
+  $.cssie()
+}
+</script>
 </head>
 <body>
+
 <h1>Cssie Tests</h1>
 
 <h1>Hover Test</h1>
@@ -39,7 +50,7 @@ $().ready(function() {
   <li>YELLOW BACKGROUND due to [rel=hello]</li>
 </ul>
 
-<input value='focus effect due to :focus' />
+<input2 value='focus effect due to :focus' />
 
 </body>
 </html>
