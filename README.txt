@@ -11,6 +11,7 @@ Plugin for jQuery providing native support for missing CSS in IE. Currently prov
 * [rel=attr] (attribute selection)
 * :first-child and any other selectors containing : and supported by jQuery
 * :focus 
+* .classA.classB (multiple class)
 
 How it works
 ------------
